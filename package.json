@@ -1,23 +1,23 @@
 {
-  "name": "grunt-contrib-clean",
-  "description": "Clean files and folders.",
-  "version": "0.6.0",
+  "name": "grunt-clean-alt",
+  "description": "This is an alternative to the grunt-contrib-clean plugin, adding asynchronous cleaning support.",
+  "version": "0.1.0",
   "homepage": "https://github.com/gruntjs/grunt-contrib-clean",
   "author": {
-    "name": "Grunt Team",
-    "url": "http://gruntjs.com/"
+    "name": "Riko Ophorst",
+    "url": "http://www.rikoophorst.com/"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/gruntjs/grunt-contrib-clean.git"
+    "url": "git://github.com/boostermedia/grunt-clean-alt.git"
   },
   "bugs": {
-    "url": "https://github.com/gruntjs/grunt-contrib-clean/issues"
+    "url": "https://github.com/boostermedia/grunt-clean-alt/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/gruntjs/grunt-contrib-clean/blob/master/LICENSE-MIT"
+      "url": "https://github.com/boostermedia/grunt-clean-alt/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {

@@ -12,7 +12,7 @@ var rimraf = require('rimraf');
 
 module.exports = function(grunt) {
 
-  function clean(filepath, options) {
+  function clean(filepath, options, cb) {
     if (!grunt.file.exists(filepath)) {
       return false;
     }
@@ -33,9 +33,15 @@ module.exports = function(grunt) {
     try {
       // Actually delete. Or not.
       if (!options['no-write']) {
-        rimraf.sync(filepath);
+        if (options.async) {
+          rimraf(filepath, cb);
+        }
+        else
+        {
+          rimraf.sync(filepath);
+        }
       }
-      grunt.verbose.writeln((options['no-write'] ? 'Not actually cleaning ' : 'Cleaning ') + filepath + '...');
+      grunt.verbose.writeln((options['no-write'] ? 'Not actually cleaning ' : 'Cleaning ') + filepath + (options.async ? '(asynchronously)' : '(synchronously)') +'...');
     } catch (e) {
       grunt.log.error();
       grunt.fail.warn('Unable to delete "' + filepath + '" file (' + e.message + ').', e);
@@ -43,15 +49,26 @@ module.exports = function(grunt) {
   }
 
   grunt.registerMultiTask('clean', 'Clean files and folders.', function() {
+
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       force: grunt.option('force') === true,
       'no-write': grunt.option('no-write') === true,
+      async: false
     });
+
+    var done;
+    if (options.async) done = this.async();
 
     // Clean specified files / dirs.
     this.filesSrc.forEach(function(filepath) {
-      clean(filepath, options);
+      if (options.async) {
+        clean(filepath, options, done);
+      }
+      else
+      {
+        clean(filepath, options);
+      }
     });
     grunt.log.ok(this.filesSrc.length  + ' ' + grunt.util.pluralize(this.filesSrc.length, 'path/paths') + ' cleaned.');
   });
